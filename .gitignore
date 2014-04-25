@@ -1,0 +1,22 @@
+# Win/MSVC generated files and binaries
+release/
+debug/
+generatedfiles/
+
+*.ncb
+*.suo
+*.idb
+*.pdb
+*.dll
+*.lib
+*.exe
+*.exp
+*.ilk
+*.rc
+
+*.opensdf
+*.sdf
+
+# Win/qmake/mvs generated project files
+#*.vcproj
+#*.sln
