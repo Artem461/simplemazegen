@@ -2,6 +2,7 @@
 release/
 debug/
 generatedfiles/
+ipch/
 
 *.ncb
 *.suo

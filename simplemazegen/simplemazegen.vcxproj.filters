@@ -50,6 +50,15 @@
     <ClCompile Include="GeneratedFiles\qrc_simplemazegen.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="maze.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_maze.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_maze.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="simplemazegen.h">
@@ -61,9 +70,18 @@
     <CustomBuild Include="simplemazegen.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="maze.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="maze.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_simplemazegen.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_maze.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
