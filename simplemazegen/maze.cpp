@@ -1,12 +1,14 @@
 #include <QtGui>
 #include "maze.h"
 
-maze::maze(int _mazeWidth, int _mazeHeight, QWidget *parent)
+maze::maze(int _mazeWidth, int _mazeHeight, bool _needToBePassed, QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
 	mazeWidth = _mazeWidth;
 	mazeHeight = _mazeHeight;
+
+	givePass = _needToBePassed;
 	
 	vertexCount = (mazeWidth+1) * (mazeHeight+1);	// число вершин
 	vertexSpace = 20;
@@ -17,9 +19,19 @@ maze::maze(int _mazeWidth, int _mazeHeight, QWidget *parent)
 	visited = vector<bool>(vertexCount,false);
 
 	buildMatrix();
-	// depth-first search поиск в глубину
-	int startVertexNumber = 1;
-	dfs(startVertexNumber);
+
+	// если лабиринт должен быть проходимым
+	if(givePass)
+		makePath();
+	
+	// инициализируем конечную матрицу лабиринта
+	mazeMatrix = matrix;
+
+	// depth-first search 
+	for(int i=0;i<visited.size();i++)
+		if(!visited[i])
+			dfs(i);
+	
 	// задаем оптимальные размеры окна с учетом параметров графа
 	this->resize(mazeWidth*vertexSpace+55,mazeHeight*vertexSpace+15);
 }
@@ -73,9 +85,48 @@ void maze::buildMatrix()
 			matrix[vTop]	[vertex]	= 
 			matrix[vBottom]	[vertex]	= 1;	// и указываем что вершина соединена ребрами со всеми смежными
 		}
-	}
+	}	
+}
 
-	mazeMatrix = matrix;						// инициализируем конечную матрицу лабиринта - только что созданной закрытой
+// add a couple random paths from entrance to exit
+void maze::makePath()
+{
+	enum direction {RIGHT,DOWN};
+	direction currentDirection=DOWN;
+
+	int currentX=0,currentY=0,nextX=0,nextY=0;	// cell-of-maze coordinates
+	int currentVertex=0,nextVertex=0;
+
+	for(int i=0;i<mazeWidth-1 + mazeHeight-1;i++)
+	{
+		currentVertex=0;
+		nextVertex=0;
+
+		if(currentX == mazeWidth-1)
+			currentDirection = DOWN;
+		else if(currentY == mazeHeight-1)
+			currentDirection = RIGHT;
+		else
+			currentDirection = direction(rand()%2);
+	
+		if(currentDirection==RIGHT)
+		{
+			nextX++;
+			currentVertex = getVertexNumber(currentX+1,currentY+1);
+			nextVertex = getVertexNumber(currentX+1,currentY+1-1);
+			currentX=nextX;
+		}
+		else if(currentDirection=DOWN)
+		{
+			nextY++;
+			currentVertex = getVertexNumber(currentX+1,currentY+1);
+			nextVertex = getVertexNumber(currentX+1-1,currentY+1);
+			currentY=nextY;
+		}
+
+		matrix[currentVertex][nextVertex] = 
+		matrix[nextVertex][currentVertex] = NULL;
+	}
 }
 
 // поиск в глубину с открытием случайных тупиков лабиринта
