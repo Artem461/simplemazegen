@@ -64,9 +64,6 @@
     <CustomBuild Include="simplemazegen.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="simplemazegen.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="simplemazegen.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
@@ -76,12 +73,15 @@
     <CustomBuild Include="maze.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="simplemazegen.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_simplemazegen.h">
+    <ClInclude Include="GeneratedFiles\ui_maze.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_maze.h">
+    <ClInclude Include="GeneratedFiles\ui_simplemazegen.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>382</height>
+    <width>419</width>
+    <height>419</height>
    </rect>
   </property>
   <property name="palette">
@@ -105,30 +105,12 @@
    <string>simplemazegen</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_5">
+   <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="2" column="0">
-         <widget class="QCheckBox" name="mazePassCheckBox">
-          <property name="font">
-           <font>
-            <family>Arial Black</family>
-            <pointsize>14</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Проходимый</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="widthLabel">
@@ -189,7 +171,7 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
+        <item>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
            <widget class="QLabel" name="heightLabel">
@@ -255,7 +237,71 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
+      <item>
+       <widget class="QComboBox" name="algorythmComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial Black</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::WheelFocus</enum>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Поиск в глубину со случайным открытием</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Эвристический алгоритм</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mazePassCheckBox">
+        <property name="font">
+         <font>
+          <family>Arial Black</family>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Проходимый</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="generateButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -355,7 +401,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>382</width>
+     <width>419</width>
      <height>21</height>
     </rect>
    </property>
