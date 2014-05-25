@@ -1,25 +1,36 @@
 #include <QtGui>
 #include "maze.h"
 
-maze::maze(int _mazeWidth, int _mazeHeight, QWidget *parent)
+maze::maze(int _mazeWidth, int _mazeHeight, int _currentAlgo, QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
 	mazeWidth = _mazeWidth;
 	mazeHeight = _mazeHeight;
+	currentAlgo = algorythm (_currentAlgo);
 	
 	vertexCount = (mazeWidth+1) * (mazeHeight+1);	// число вершин
 	vertexSpace = 20;
 
 	srand(time(NULL));	// инициализация рандомайзера
 
-	matrix = vector<vector<int>> ( vertexCount,vector<int>(vertexCount,NULL) );
+	mazeMatrix = matrix = vector<vector<int>> ( vertexCount,vector<int>(vertexCount,NULL) );
 	visited = vector<bool>(vertexCount,false);
 
-	buildMatrix();
-	// depth-first search поиск в глубину
-	int startVertexNumber = 1;
-	dfs(startVertexNumber);
+	if(currentAlgo == DFS)
+	{
+		// строим все возможные стенки
+		buildMatrix();
+		// depth-first search поиск в глубину
+		for(int i=0;i<visited.size();i++)
+			if(!visited[i])
+				dfs(i);
+	}
+	else if(currentAlgo == HEURISTIC)
+	{
+		heuriscticBuild();
+	}
+
 	// задаем оптимальные размеры окна с учетом параметров графа
 	this->resize(mazeWidth*vertexSpace+55,mazeHeight*vertexSpace+15);
 }
@@ -39,12 +50,7 @@ int maze::getVertexNumber(int currentXPos, int currentYPos)
 void maze::getVertexCoords(int number, int &x, int &y)
 {
 	x=number%(mazeWidth+1);
-	y=0;
-	while(number > (mazeWidth+1))
-	{
-		number -= (mazeWidth+1);
-		y++;
-	}
+	y=number/(mazeWidth+1);
 }
 
 // построение матрицы смежности для графа полностью закрытого лабиринта
@@ -87,10 +93,75 @@ void maze::dfs(int start)
 	{
 		if(matrix[start][vertex])
 		{
-			mazeMatrix[start][vertex] = rand()%2;
+			mazeMatrix[start][vertex] = mazeMatrix[vertex][start] = rand()%2;
 			if(!visited[vertex])					
 				dfs(vertex);
 		}
+	}
+}
+
+// эвристический алгоритм
+void maze::heuriscticBuild()
+{
+	// магическое число раз
+	for(int i=0;i<vertexCount/mazeHeight;i++)
+		// для случайной пары вершин - прокладываем стенку от одной к другой
+		makeEdge( getVertexNumber(1+rand()%(mazeWidth-1),1+rand()%(mazeHeight-1)) , getVertexNumber(rand()%(mazeWidth),rand()%(mazeHeight)) );
+		//makeEdge(rand()%(vertexCount-1),rand()%(vertexCount-1));
+}
+
+// строит стену от вершины start к вершине finish
+void maze::makeEdge(int start, int finish)
+{
+	int edge = 1;
+	// возможные направления прокладки стены
+	enum direction {STAY,LEFT,RIGHT,UP,DOWN};
+	direction currentDirection=STAY;
+
+	int nextX=0,nextY=0,endX=0,endY=0;
+	// текущая пара вершин для постройки стенки
+	int currentVertex=start,nextVertex=start;
+	// инициализация координат начальной и конечной вершин
+	getVertexCoords(start,nextX,nextY);
+	getVertexCoords(finish,endX,endY);
+	// массив допустимых направлений движения
+	vector<direction> permitDirections(NULL);
+	// определение допустимых направлений
+	if(nextX < endX)	permitDirections.push_back(RIGHT);
+	else if(nextX > endX) permitDirections.push_back(LEFT);
+
+	if(nextY < endY)	permitDirections.push_back(DOWN);
+	else if(nextY > endY) permitDirections.push_back(UP);
+
+	while(currentVertex!=finish)
+	{
+		if(permitDirections.size()>1)
+			// если текущая и конечная вершины на одной горизонтали
+			if(nextX == endX)
+				// убираем из допустимых направлений прокладки "право-лево"
+				permitDirections.erase(permitDirections.begin());
+			else if(nextY == endY)
+				// аналогично для "вверх-вниз"
+				permitDirections.pop_back();
+		// определяем случайное направление движения из допустимых
+		if(permitDirections.size())
+			currentDirection = permitDirections.at(rand() % permitDirections.size());
+		// в зависимости от выбранного направления определяем следующую вершину
+		if(currentDirection==LEFT)
+			nextX--;
+		else if(currentDirection==RIGHT)
+			nextX++;
+		else if(currentDirection==UP)
+			nextY--;
+		else if(currentDirection==DOWN)
+			nextY++;
+
+		nextVertex=getVertexNumber(nextX,nextY);
+		// строим стенку между текущей и следующей вершинами
+		mazeMatrix[currentVertex][nextVertex] = 
+		mazeMatrix[nextVertex][currentVertex] = edge;
+
+		currentVertex=nextVertex;
 	}
 }
 

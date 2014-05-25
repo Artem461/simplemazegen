@@ -34,5 +34,5 @@ void simplemazegen::setHeightValue() // height slider - ползунок высоты
 
 void simplemazegen::onGenerateBtnClicked() // make maze! - создать лабиринт по клику
 {
-	maze(selectedMazeWidth,selectedMazeHeight).exec();
+	maze(selectedMazeWidth,selectedMazeHeight, ui.algorythmComboBox->currentIndex()).exec();
 }
