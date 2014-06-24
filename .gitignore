@@ -19,5 +19,6 @@ ipch/
 *.sdf
 
 # Win/qmake/mvs generated project files
-#*.vcproj
-#*.sln
+*.vcproj
+*.vcxproj*
+*.sln

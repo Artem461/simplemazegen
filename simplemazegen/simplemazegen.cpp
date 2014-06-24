@@ -20,19 +20,19 @@ simplemazegen::~simplemazegen()
 
 }
 
-void simplemazegen::setWidthValue()	// width slider - ползунок ширины
+void simplemazegen::setWidthValue()	// width slider
 {
 	ui.widthLineEdit->setText(QString::number(ui.widthSlider->value()));
 	selectedMazeWidth = ui.widthSlider->value();
 }
 
-void simplemazegen::setHeightValue() // height slider - ползунок высоты
+void simplemazegen::setHeightValue() // height slider
 {
 	ui.heigthLineEdit->setText(QString::number(ui.heightSlider->value()));
 	selectedMazeHeight = ui.heightSlider->value();
 }
 
-void simplemazegen::onGenerateBtnClicked() // make maze! - создать лабиринт по клику
+void simplemazegen::onGenerateBtnClicked() // generate maze
 {
 	maze(selectedMazeWidth,selectedMazeHeight, ui.algorythmComboBox->currentIndex(),ui.mazePassCheckBox->isChecked()).exec();
 }

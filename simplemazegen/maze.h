@@ -19,20 +19,19 @@ public:
 private:
 	Ui::maze ui;
 
-	// должен ли быть проходимым
+	// should be able to pass?
 	bool givePass;
 	// current generate algorythm
 	enum algorythm {DFS,HEURISTIC};
 	algorythm currentAlgo;
-	// размеры лабиринта
+
 	int mazeWidth, mazeHeight;
-	// матрицы смежности для графов полностью закрытого и конечного лабиринтов
+
 	vector<vector<int>> matrix,mazeMatrix;
-	// посещенные вершины при поиске в глубину
+	// visited vertexes in DFS
 	vector<bool> visited;
-	// число вершин
 	int vertexCount;
-	// пространство между вершинами
+	// pixels between vertexes
 	int vertexSpace;
 	
 	void buildMatrix();
